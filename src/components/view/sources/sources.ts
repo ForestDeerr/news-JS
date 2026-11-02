@@ -11,6 +11,10 @@ class Sources {
         }
 
         data.forEach((item) => {
+            if (!item.id) {
+                return;
+            }
+
             const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
 
             const sourceName = sourceClone.querySelector('.source__item-name');
@@ -21,16 +25,18 @@ class Sources {
             }
 
             sourceName.textContent = item.name;
+            sourceItem.setAttribute('data-source-id', item.id);
 
             fragment.append(sourceClone);
         });
+
         const sources = document.querySelector('.sources');
 
         if (!(sources instanceof HTMLElement)) {
             return;
         }
 
-        sources.append(fragment);
+        sources.replaceChildren(fragment);
     }
 }
 
